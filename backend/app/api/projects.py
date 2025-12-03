@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from geoalchemy2.elements import WKTElement
 from typing import Optional
 from uuid import UUID
 from ..core.database import get_db
@@ -37,12 +36,8 @@ async def submit_project(project_data: ProjectCreate, db: Session = Depends(get_
         other_requirement_text=project_data.other_requirement_text,
     )
 
-    # Set location point if coordinates provided
-    if project_data.latitude is not None and project_data.longitude is not None:
-        new_project.location = WKTElement(
-            f'POINT({project_data.longitude} {project_data.latitude})',
-            srid=4326
-        )
+    # Coordinates are stored as latitude/longitude floats
+    # (PostGIS Geography column removed for SQLite compatibility)
 
     db.add(new_project)
     db.flush()  # Get the project ID

@@ -1,11 +1,16 @@
-from sqlalchemy import Column, String, Integer, Float, Text, DateTime, ForeignKey, Enum, ARRAY
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Column, String, Integer, Float, Text, DateTime, ForeignKey, Enum
 from sqlalchemy.orm import relationship
-from geoalchemy2 import Geography
 from datetime import datetime
 import uuid
 import enum
 from ..core.database import Base
+
+# For SQLite compatibility, use String for UUID
+try:
+    from sqlalchemy.dialects.postgresql import UUID as PGUUID
+    UUID = PGUUID
+except:
+    UUID = String(36)
 
 
 class ProjectStatus(str, enum.Enum):
@@ -64,10 +69,12 @@ class Project(Base):
     city = Column(String(255), nullable=False, index=True)
     country = Column(String(255), nullable=False, index=True)
 
-    # Coordinates (using PostGIS for geospatial queries)
+    # Coordinates
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
-    location = Column(Geography(geometry_type='POINT', srid=4326), nullable=True)
+    # Note: PostGIS Geography column removed for SQLite compatibility
+    # For production with PostgreSQL, uncomment:
+    # location = Column(Geography(geometry_type='POINT', srid=4326), nullable=True)
 
     # Descriptions
     brief_description = Column(Text, nullable=False)

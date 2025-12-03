@@ -19,8 +19,7 @@ python-dateutil==2.9.0.post0
 aiosmtplib==3.0.2
 email-validator==2.2.0
 
-# CORS and middleware
-python-cors==1.0.0
+# CORS is handled by FastAPI middleware (no extra package needed)
 
 # Validation
 pydantic==2.10.5

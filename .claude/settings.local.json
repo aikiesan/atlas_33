@@ -3,7 +3,23 @@
     "allow": [
       "Bash(npm create:*)",
       "Bash(copy .env.example .env)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(pip install:*)",
+      "Bash(npm install:*)",
+      "Bash(python:*)",
+      "Bash(alembic revision:*)",
+      "Bash(set:*)",
+      "Bash(alembic upgrade:*)",
+      "Bash(pip uninstall:*)",
+      "Bash(start:*)",
+      "Bash(timeout /t 3)",
+      "Bash(curl:*)",
+      "Bash(uvicorn:*)",
+      "Bash(timeout /t 5)",
+      "Bash(git add:*)",
+      "Bash(dir nul 2)",
+      "Bash($null)",
+      "Bash(del nul 2)"
     ],
     "deny": [],
     "ask": []

@@ -1,9 +1,15 @@
 from sqlalchemy import Column, String, DateTime, Enum
-from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 import uuid
 import enum
 from ..core.database import Base
+
+# For SQLite compatibility
+try:
+    from sqlalchemy.dialects.postgresql import UUID as PGUUID
+    UUID = PGUUID
+except:
+    UUID = String(36)
 
 
 class UserRole(str, enum.Enum):
