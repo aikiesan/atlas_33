@@ -69,18 +69,20 @@ async def get_dashboard_kpis(
         )
 
     # Calculate metrics
-    total_projects = query.count()
-    cities_engaged = query.with_entities(func.count(distinct(Project.city))).scalar() or 0
-    countries_represented = query.with_entities(func.count(distinct(Project.country))).scalar() or 0
-    total_funding_needed = query.with_entities(func.sum(Project.funding_needed)).scalar() or 0.0
-    total_funding_spent = query.with_entities(func.sum(Project.funding_spent)).scalar() or 0.0
+    stats = query.with_entities(
+        func.count(Project.id).label('total_projects'),
+        func.count(distinct(Project.city)).label('cities_engaged'),
+        func.count(distinct(Project.country)).label('countries_represented'),
+        func.sum(Project.funding_needed).label('total_funding_needed'),
+        func.sum(Project.funding_spent).label('total_funding_spent')
+    ).first()
 
     return {
-        "total_projects": total_projects,
-        "cities_engaged": cities_engaged,
-        "countries_represented": countries_represented,
-        "total_funding_needed": float(total_funding_needed),
-        "total_funding_spent": float(total_funding_spent),
+        "total_projects": stats.total_projects or 0,
+        "cities_engaged": stats.cities_engaged or 0,
+        "countries_represented": stats.countries_represented or 0,
+        "total_funding_needed": float(stats.total_funding_needed or 0.0),
+        "total_funding_spent": float(stats.total_funding_spent or 0.0),
     }
 
 
