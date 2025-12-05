@@ -28,7 +28,7 @@ async def submit_project(project_data: ProjectCreate, db: Session = Depends(get_
             response = await client.post(
                 "https://www.google.com/recaptcha/api/siteverify",
                 data={
-                    "secret": "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe",
+                    "secret": settings.RECAPTCHA_SECRET_KEY,
                     "response": project_data.captcha_token
                 }
             )

@@ -530,7 +530,7 @@ export default function SubmitProject() {
           {!editToken && (
             <div className="pt-4 flex justify-center">
                 <ReCAPTCHA
-                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                     onChange={(token) => setCaptchaToken(token)}
                     theme="dark"
                 />
