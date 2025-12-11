@@ -33,11 +33,6 @@ export default function ProjectDetailPanel({ project, onClose }: ProjectDetailPa
 
   if (!project) return null;
 
-  // Debug: log image URLs
-  console.log('Project:', project.projectName);
-  console.log('Image URLs:', project.imageUrls);
-  console.log('Image URLs length:', project.imageUrls?.length);
-
   const handleImageClick = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
